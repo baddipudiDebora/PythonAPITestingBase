@@ -4,7 +4,7 @@ import os
 
 from utils.api_client import get_dictionary_based_on_input_json_type
 
-
+# this is not called by any class it's actually a test case that's likely being run using Python’s unittest framework.
 class TestGetDictionaryBasedOnInputJsonType(unittest.TestCase):
 
     def test_dict_input(self):
@@ -19,6 +19,7 @@ class TestGetDictionaryBasedOnInputJsonType(unittest.TestCase):
 
     def test_list_multiple_strings(self):
         data = ["apple", "banana"]
+
         result = get_dictionary_based_on_input_json_type(data)
         expected = {
             "[0].proxyKey": "apple",
@@ -89,6 +90,7 @@ class TestGetDictionaryBasedOnInputJsonType(unittest.TestCase):
         self.assertIsInstance(result, dict)
         self.assertEqual(result.get("username"), "DebXYZ")
         self.assertEqual(result.get("id"), 109)
-
+# this line checks if you’re running this file directly, or being imported as a module into another script.
+# If you omit that part, and just import this test file elsewhere, the tests won’t run unless you explicitly trigger them—making
 if __name__ == "__main__":
     unittest.main()

@@ -2,14 +2,14 @@ import requests
 import json
 import os
 
+from utils.helpers import get_object_type_name
+
+
 class APIClient:
     requestSampleString = ""
     hasArrayInJson = False
     hasStringOnlyJson = False
     hasIntOnlyJson = False
-
-def get_object_type_name(obj):
-    return type(obj).__name__
 
 def get_dictionary_based_on_input_json_type(input_obj):
     dictionary_obj = {}
