@@ -1,12 +1,13 @@
 import os
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 import pytest
 
 from utils.helpers import get_object_type_name, get_full_file_path, read_file_from_path_and_get_file_content, \
-    store_json_sample_string
+    store_json_sample_string, write_to_file_from_path
 
 
 class test_helpers(unittest.TestCase):
@@ -75,7 +76,7 @@ class test_helpers(unittest.TestCase):
 
         def test_read_file_from_path_and_get_file_content_missing_file(self):
             with pytest.raises(Exception) as exc_info:
-                read_file_from_path_and_get_file_content("nonexistent_folder", "missing.json")
+                read_file_from_path_and_get_file_content("nonexistent_folder", "missing.json",base_path=None)
             assert "Error reading JSON sample" in str(exc_info.value)
 
         def test_store_json_sample_string_success(self):
@@ -108,4 +109,15 @@ class test_helpers(unittest.TestCase):
                         file_name=file.name,
                         base_path=tmp_path
                     )
+
+        def test_write_to_file_from_path(self):
+            with tempfile.TemporaryDirectory() as tmpdirname:
+                tmp_path = Path(tmpdirname)
+                folder = tmp_path / "empty_folder"
+                print(folder)
+                folder.mkdir()
+                file = folder / "empty.json"
+                texttowrite = 'This data is writen by file write object and the time it is written is - '+str(datetime.now())
+                write_to_file_from_path("empty_folder", "empty.json", texttowrite, base_path="F:/Python Practise")
+                self.assertEqual(read_file_from_path_and_get_file_content("empty_folder", "empty.json", "F:/Python Practise"),texttowrite)
 
