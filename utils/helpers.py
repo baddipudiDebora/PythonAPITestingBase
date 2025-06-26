@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 from typing import Union
 import os
 
@@ -8,11 +9,15 @@ def get_object_type_name(value):
 
 
 def get_full_file_path(folder_name: str) -> str:
-    root_path = os.path.dirname(os.path.abspath(__file__))
-    # Explicitly cast to str to satisfy strict type checkers
-    relative_path = os.path.join("..", "..", folder_name)
-    full_path = os.path.abspath(os.path.join(root_path, relative_path))
-    return full_path
+    """
+    Method name: get_full_file_path
+       Params: folder_name which is a string and -> str annotation indicates that this function returns a string.
+       --> str is just for readers clarity. it is optional. you can still return a string. """
+    print(get_full_file_path.__doc__)
+    root = Path(__file__).resolve().parent      # same as dirname+abspath
+    target = root.parents[1] / folder_name      # parents[0] is one up, parents[1] two up
+    return str(target)
+
 
 
 def read_file_from_path_and_get_file_content(json_folder_name, file_name, base_path):
